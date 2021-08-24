@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
+from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
+CORS(app)
 
 people_data = [
   {
@@ -66,6 +69,12 @@ def people():
     return jsonify({ 'new_person': new_person })
 
 @app.route('/people/<int:person_id>')
-def person(person_id): 
+def person(person_id):
+  if person_id > len(people_data):
+    raise NotFound('Person not found - index out of range')
   person = [person for person in people_data if person['id'] == person_id]
   return jsonify({ "person": person[0]})
+
+@app.errorhandler(NotFound)
+def handle_not_found(err):
+  return jsonify({'error': f'{err}'})
