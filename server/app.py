@@ -67,4 +67,5 @@ def people():
 
 @app.route('/people/<int:person_id>')
 def person(person_id): 
-  return jsonify({ "person": f'Person id: {person_id}' })
+  person = [person for person in people_data if person['id'] == person_id]
+  return jsonify({ "person": person[0]})
