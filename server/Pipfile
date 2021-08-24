@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "*"
+pytest = "*"
 
 [dev-packages]
 pytest = "*"
@@ -13,5 +14,5 @@ pytest = "*"
 python_version = "3.9"
 
 [scripts]
-
+test = "pytest ."
 dev = "sh -c \"export FLASK_ENV='development' && flask run\""
