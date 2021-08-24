@@ -1,5 +1,4 @@
-from flask import Flask, jsonify
-
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -36,8 +35,6 @@ people_data = [
   }
 ]
 
-next_id = 4
-
 @app.route('/')
 def root():
   return "Hello world!"
@@ -54,7 +51,19 @@ def colours():
 
 @app.route('/people', methods=["POST", "GET"])
 def people(): 
-  return jsonify({ "people": people_data })
+  if request.method == "GET":
+    return jsonify({ "people": people_data })
+  elif request.method == "POST":
+    new_person_data = request.json
+    new_person = {
+      "id": people_data[-1]['id'] + 1,
+      "name": new_person_data['name'],
+      "cohort": new_person_data['cohort'],
+      "fave_colour": 
+        new_person_data["fave_colour"]
+    }
+    people_data.append(new_person)
+    return jsonify({ 'new_person': new_person })
 
 @app.route('/people/<int:person_id>')
 def person(person_id): 
