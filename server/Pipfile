@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 flask = "*"
 pytest = "*"
+jinja2 = "*"
 
 [dev-packages]
 pytest = "*"
