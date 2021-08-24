@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from werkzeug.exceptions import NotFound
+
 
 app = Flask(__name__)
 CORS(app)
@@ -40,7 +41,7 @@ people_data = [
 
 @app.route('/')
 def root():
-  return "Hello world!"
+  return render_template('index.html', title="Home", content="bye")
 
 @app.route('/colours')
 def colours(): 
