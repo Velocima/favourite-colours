@@ -4,8 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{cohort}'s favorite colours</title>
-
+    <title>{{cohort}}'s favorite colours</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Besley&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
         margin: 0;
@@ -13,6 +18,19 @@
       article {
         padding: 10px;
         text-align: center;
+        font-family: 'Besley', serif;
+      }
+      article h3 {
+        margin: 0px;
+      }
+      article h2 {
+        margin: 0px;
+      }
+      .colour-name {
+        font-size: 40px;
+      }
+      .cohort-name {
+        font-size: 15px;
       }
     </style>
   </head>
@@ -27,19 +45,21 @@
         newArticle.style.background = data[i].fave_colour.hex;
 
         const personName = document.createElement('h2');
-        personName.textContent = data[i].name;
+        personName.textContent = data[i].name.toLowerCase();
         personName.style.color = textColour;
 
         const colourName = document.createElement('h3');
         colourName.textContent = data[i].fave_colour.name;
         colourName.style.color = textColour;
+        colourName.classList.add('colour-name');
 
         const cohortName = document.createElement('h3');
-        cohortName.textContent = data[i].cohort;
+        cohortName.textContent = data[i].cohort.toLowerCase();
         cohortName.style.color = textColour;
+        cohortName.classList.add('cohort-name');
 
-        newArticle.append(personName);
         newArticle.append(colourName);
+        newArticle.append(personName);
         newArticle.append(cohortName);
         document.getElementById('person-container').append(newArticle);
       }
