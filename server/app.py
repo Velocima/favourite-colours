@@ -1,7 +1,29 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from werkzeug.exceptions import NotFound
+import sqlite3
 
+conn = sqlite3.connect('database.db', check_same_thread=False)
+c = conn.cursor()
+c.execute('''DROP TABLE IF EXISTS people''')
+c.execute(""" CREATE TABLE people (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    cohort TEXT NOT NULL,
+    fave_colour_name TEXT,
+    fave_colour_hex TEXT,
+    fave_colour_r INTEGER, 
+    fave_colour_g INTEGER, 
+    fave_colour_b INTEGER 
+) """)
+# c.execute("INSERT INTO people (name, cohort, fave_color_name, fave_color_hex, fave_color_r, fave_color_g, fave_color_b )VALUES ('Jawwad', 'Morris', 'grey', '#808080', '128', '128', '128')")
+# c.execute("INSERT INTO people (name, cohort, fave_color_name, fave_color_hex, fave_color_r, fave_color_g, fave_color_b )VALUES ('max', 'Morris', 'grey', '#808080', '128', '128', '128')")
+# c.execute("INSERT INTO people (name, cohort, fave_color_name, fave_color_hex, fave_color_r, fave_color_g, fave_color_b )VALUES ('dan', 'Morris', 'grey', '#808080', '128', '128', '128')")
+
+c.execute("SELECT * FROM people")
+print(c.fetchall())
+conn.commit()
+# conn.close()
 
 app = Flask(__name__)
 CORS(app)
@@ -89,6 +111,12 @@ def people():
             "fave_colour":
             new_person_data["fave_colour"]
         }
+        c.execute("INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b ) VALUES (?,?,?,?,?,?,?)",
+        (new_person_data['name'], new_person_data['cohort'], new_person_data['fave_colour']['name'], new_person_data['fave_colour']['hex'], new_person_data['fave_colour']['rgb']['r'], new_person_data['fave_colour']['rgb']['g'], new_person_data['fave_colour']['rgb']['b']))
+        c.execute("SELECT * FROM people")
+        print(c.fetchall())
+        conn.commit()
+        conn.close()
         people_data.append(new_person)
         return jsonify({'new_person': new_person})
 
@@ -104,3 +132,7 @@ def person(person_id):
 @app.errorhandler(NotFound)
 def handle_not_found(err):
     return jsonify({'error': f'{err}'})
+
+
+
+
