@@ -1,1 +1,1 @@
-web: cd server && pip install pipenv && pipenv shell && pipenv install && pipenv run start
+web: cd server && pip install flask gunicorn flask-cors && gunicorn app:app
