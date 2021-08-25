@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from werkzeug.exceptions import NotFound
+import os
 import sqlite3
 
 conn = sqlite3.connect('database.db', check_same_thread=False)
@@ -22,7 +23,11 @@ print(c.fetchall())
 conn.commit()
 
 app = Flask(__name__)
-CORS(app)
+
+if (os.getenv('FLASK_ENV') == 'development'):
+    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "http://127.0.0.1:5000/"}})
+else:
+    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "https://cohort-colours.herokuapp.com/"}})
 
 people_data = [
 
@@ -72,7 +77,11 @@ people_data = [
 
 @app.route('/')
 def root():
-    return render_template('index.html', title="Home", content="bye")
+    if (os.getenv('FLASK_ENV') == 'development'):
+        url = 'http://127.0.0.1:5000/people'
+    else:
+        url = 'https://cohort-colours.herokuapp.com/people'
+    return render_template('index.html', title="Home", content="Cohort Colours", url=url)
 
 
 @app.route('/people')

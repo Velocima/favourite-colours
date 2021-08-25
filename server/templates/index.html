@@ -1,82 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{{title}}</title>
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      h1 {
-        text-align: center;
-        margin: 20px 0;
-      }
-      form {
-        border: solid 1px red;
-        margin: 20px auto;
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>{{content}}</h1>
-    <form>
-      <label for="name">Name:</label>
-      <input name="name" type="text" id="name" />
-      <label for="cohort">Cohort:</label>
-      <input name="cohort" type="text" id="cohort" />
-      <label for="color-name">Colour name:</label>
-      <input name="color-name" type="text" id="color-name" />
-      <input name="color" type="color" />
-      <input type="submit" />
-    </form>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				transition: 1s;
+			}
+			h1 {
+				text-align: center;
+				margin: 20px 0;
+			}
+			form {
+				margin: 20px auto;
+				width: 50%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 20px;
 
-    <script>
-      function hexToRgb(hex) {
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result
-          ? {
-              r: parseInt(result[1], 16),
-              g: parseInt(result[2], 16),
-              b: parseInt(result[3], 16),
-            }
-          : null;
-      }
+				background-color: aliceblue;
+			}
+			input[type='color'] {
+				border: none;
+				outline: none;
+			}
+			input {
+				width: 100%;
+				height: 30px;
+				margin: 10px 0px 15px 0px;
+			}
+			a {
+				text-decoration: none;
+				color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>{{content}}</h1>
+		<form>
+			<label for="name">Name:</label>
+			<input name="name" type="text" id="name" required />
+			<label for="cohort">Cohort:</label>
+			<input name="cohort" type="text" id="cohort" required />
+			<label for="color-name">Colour name:</label>
+			<input name="color-name" type="text" id="color-name" required />
+			<input name="color" type="color" required />
+			<input type="submit" />
+			<a href="{{url}}">View everyone's favorite colours</a>
+		</form>
 
-      const form = document.querySelector('form');
-      const handlesubmit = async (e) => {
-        e.preventDefault();
+		<script>
+			function hexToRgb(hex) {
+				var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+				return result
+					? {
+							r: parseInt(result[1], 16),
+							g: parseInt(result[2], 16),
+							b: parseInt(result[3], 16),
+					  }
+					: null;
+			}
 
-        const formData = Object.fromEntries(new FormData(e.target));
-        const body = JSON.stringify({
-          name: formData.name,
-          cohort: formData.cohort,
-          fave_colour: {
-            name: formData['color-name'],
-            hex: formData.color,
-            rgb: hexToRgb(formData.color),
-          },
-        });
-        options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body,
-        };
-        await fetch(`http://${window.location.host}/api/people`, options);
-      };
-      form.addEventListener('submit', handlesubmit);
-    </script>
-  </body>
+			const form = document.querySelector('form');
+			const handlesubmit = async (e) => {
+				e.preventDefault();
+
+				const formData = Object.fromEntries(new FormData(e.target));
+				const body = JSON.stringify({
+					name: formData.name,
+					cohort: formData.cohort,
+					fave_colour: {
+						name: formData['color-name'],
+						hex: formData.color,
+						rgb: hexToRgb(formData.color),
+					},
+				});
+				options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body,
+				};
+				await fetch(
+					`http${window.location.host === 'cohort-colours.herokuapp.com' ? 's' : ''}://${
+						window.location.host
+					}/api/people`,
+					options
+				);
+
+				window.location.pathname = '/people';
+			};
+			form.addEventListener('submit', handlesubmit);
+
+			function changeBackgroundColour() {
+				const r = Math.floor(Math.random() * 256);
+				const g = Math.floor(Math.random() * 256);
+				const b = Math.floor(Math.random() * 256);
+
+				document.querySelector('body').style.background = `rgb(${r},${g},${b})`;
+			}
+
+			setInterval(changeBackgroundColour, 1000);
+		</script>
+	</body>
 </html>
