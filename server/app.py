@@ -2,7 +2,25 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from werkzeug.exceptions import NotFound
 import os
+import sqlite3
 
+conn = sqlite3.connect('database.db', check_same_thread=False)
+c = conn.cursor()
+c.execute('''DROP TABLE IF EXISTS people''')
+c.execute(""" CREATE TABLE people (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    cohort TEXT NOT NULL,
+    fave_colour_name TEXT,
+    fave_colour_hex TEXT,
+    fave_colour_r INTEGER, 
+    fave_colour_g INTEGER, 
+    fave_colour_b INTEGER 
+) """)
+
+c.execute("SELECT * FROM people")
+print(c.fetchall())
+conn.commit()
 
 app = Flask(__name__)
 
@@ -57,7 +75,6 @@ people_data = [
     }
 ]
 
-
 @app.route('/')
 def root():
     if (os.getenv('FLASK_ENV') == 'development'):
@@ -88,11 +105,34 @@ def colours():
 @app.route('/api/people', methods=["POST", "GET"])
 def people():
     if request.method == "GET":
-        return jsonify({"people": people_data})
+        data = c.fetchall()
+        formatted_data = [
+            {
+                "id": person['id'],
+                "name": person['name'],
+                "cohort": person['morris'],
+                "fave_colour": {
+                    "name": person['fave_colour_name'],
+                    "hex": person['fave_colour_hex'],
+                    "rgb": {
+                        "r": person['fave_colour_r'],
+                        "g": person['fave_colour_g'],
+                        "b": person['fave_colour_b']
+                    }
+                }
+
+            } for person in data
+        ]
+        return jsonify({"people": formatted_data})
     elif request.method == "POST":
         new_person_data = request.json
+        c.execute("INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b ) VALUES (?,?,?,?,?,?,?)",
+        (new_person_data['name'], new_person_data['cohort'], new_person_data['fave_colour']['name'], new_person_data['fave_colour']['hex'], new_person_data['fave_colour']['rgb']['r'], new_person_data['fave_colour']['rgb']['g'], new_person_data['fave_colour']['rgb']['b']))
+        c.execute("SELECT * FROM people")
+        print(c.fetchall())
+        conn.commit()
         new_person = {
-            "id": people_data[-1]['id'] + 1,
+            "id": c.fetchall()[-1][0],
             "name": new_person_data['name'],
             "cohort": new_person_data['cohort'],
             "fave_colour":
@@ -113,3 +153,7 @@ def person(person_id):
 @app.errorhandler(NotFound)
 def handle_not_found(err):
     return jsonify({'error': f'{err}'})
+
+
+
+
