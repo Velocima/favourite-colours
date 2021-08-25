@@ -98,11 +98,12 @@
 					}/api/people`,
 					options
 				);
+
+				window.location.pathname = '/people';
 			};
 			form.addEventListener('submit', handlesubmit);
 
 			function changeBackgroundColour() {
-				console.log('hey');
 				const r = Math.floor(Math.random() * 256);
 				const g = Math.floor(Math.random() * 256);
 				const b = Math.floor(Math.random() * 256);
