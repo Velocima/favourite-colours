@@ -57,7 +57,7 @@ def root():
     return render_template('index.html', title="Home", content="bye")
 
 
-@app.route('/colours')
+@app.route('/api/colours')
 def colours():
     unique_colours = list({person['fave_colour']['name']
                           for person in people_data})
@@ -70,7 +70,7 @@ def colours():
     return jsonify({"colours": colours})
 
 
-@app.route('/people', methods=["POST", "GET"])
+@app.route('/api/people', methods=["POST", "GET"])
 def people():
     if request.method == "GET":
         return jsonify({"people": people_data})
@@ -87,7 +87,7 @@ def people():
         return jsonify({'new_person': new_person})
 
 
-@app.route('/people/<int:person_id>')
+@app.route('/api/people/<int:person_id>')
 def person(person_id):
     if person_id > len(people_data):
         raise NotFound('Person not found - index out of range')
