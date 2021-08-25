@@ -1,72 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{{title}}</title>
 
-    <style>
-       * {
-           margin: 0;
-           padding: 0;
-           box-sizing: border-box;
-       }
-       h1 {
-           text-align: center;
-           margin: 20px 0;
-       }
-       form {
-           border: solid 1px red;
-           margin: 20px auto;
-           width: 50%;
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           justify-content: center;
-           padding: 20px;
-       }
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			h1 {
+				text-align: center;
+				margin: 20px 0;
+			}
+			form {
+				border: solid 1px red;
+				margin: 20px auto;
+				width: 50%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>{{content}}</h1>
+		<form>
+			<label for="name">Name:</label>
+			<input name="name" type="text" id="name" />
+			<label for="cohort">Cohort:</label>
+			<input name="cohort" type="text" id="cohort" />
+			<label for="color-name">Colour name:</label>
+			<input name="color-name" type="text" id="color-name" />
+			<input name="color" type="color" />
+			<input type="submit" />
+		</form>
 
-       
-    </style>
-</head>
-<body>
-    <h1>{{content}}</h1>
-    <form>
-        <label for="name">Name:</label>
-        <input name="name" type="text" id="name">
-        <label for="cohort">Cohort:</label>
-        <input name="cohort" type="text" id="cohort">
-        <input name="color" type="color">
-        <input type="submit">
-    </form>
+		<script>
+			function hexToRgb(hex) {
+				var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+				return result
+					? {
+							r: parseInt(result[1], 16),
+							g: parseInt(result[2], 16),
+							b: parseInt(result[3], 16),
+					  }
+					: null;
+			}
 
+			const form = document.querySelector('form');
+			const handlesubmit = async (e) => {
+				e.preventDefault();
 
-
-    <script>
-        const form = document.querySelector('form');
-        const handlesubmit = async(e) => {
-            e.preventDefault();
-            // await fetch('http://127.0.0.1:5000/', options)
-    
-            const formData = Object.fromEntries(new FormData(e.target));
-            console.log(formData)
-            // options = {
-            //             method: 'POST', 
-            //             mode: 'cors', 
-            //             cache: 'no-cache', 
-            //             credentials: 'same-origin', 
-            //             headers: {
-            //             'Content-Type': 'application/json'
-            //             },
-            //         }
-            
-                }
-            
-
-
-        form.addEventListener('submit', handlesubmit)
-    </script>
-</body>
-
+				const formData = Object.fromEntries(new FormData(e.target));
+				const body = JSON.stringify({
+					name: formData.name,
+					cohort: formData.cohort,
+					fave_colour: {
+						name: formData['color-name'],
+						hex: formData.color,
+						rgb: hexToRgb(formData.color),
+					},
+				});
+				options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body,
+				};
+				await fetch(`http://${window.host}/api/people`, options);
+			};
+			form.addEventListener('submit', handlesubmit);
+		</script>
+	</body>
 </html>
