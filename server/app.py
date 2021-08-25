@@ -16,14 +16,10 @@ c.execute(""" CREATE TABLE people (
     fave_colour_g INTEGER, 
     fave_colour_b INTEGER 
 ) """)
-# c.execute("INSERT INTO people (name, cohort, fave_color_name, fave_color_hex, fave_color_r, fave_color_g, fave_color_b )VALUES ('Jawwad', 'Morris', 'grey', '#808080', '128', '128', '128')")
-# c.execute("INSERT INTO people (name, cohort, fave_color_name, fave_color_hex, fave_color_r, fave_color_g, fave_color_b )VALUES ('max', 'Morris', 'grey', '#808080', '128', '128', '128')")
-# c.execute("INSERT INTO people (name, cohort, fave_color_name, fave_color_hex, fave_color_r, fave_color_g, fave_color_b )VALUES ('dan', 'Morris', 'grey', '#808080', '128', '128', '128')")
 
 c.execute("SELECT * FROM people")
 print(c.fetchall())
 conn.commit()
-# conn.close()
 
 app = Flask(__name__)
 CORS(app)
@@ -74,7 +70,6 @@ people_data = [
     }
 ]
 
-
 @app.route('/')
 def root():
     return render_template('index.html', title="Home", content="bye")
@@ -101,22 +96,39 @@ def colours():
 @app.route('/api/people', methods=["POST", "GET"])
 def people():
     if request.method == "GET":
-        return jsonify({"people": people_data})
+        data = c.fetchall()
+        formatted_data = [
+            {
+                "id": person['id'],
+                "name": person['name'],
+                "cohort": person['morris'],
+                "fave_colour": {
+                    "name": person['fave_colour_name'],
+                    "hex": person['fave_colour_hex'],
+                    "rgb": {
+                        "r": person['fave_colour_r'],
+                        "g": person['fave_colour_g'],
+                        "b": person['fave_colour_b']
+                    }
+                }
+
+            } for person in data
+        ]
+        return jsonify({"people": formatted_data})
     elif request.method == "POST":
         new_person_data = request.json
-        new_person = {
-            "id": people_data[-1]['id'] + 1,
-            "name": new_person_data['name'],
-            "cohort": new_person_data['cohort'],
-            "fave_colour":
-            new_person_data["fave_colour"]
-        }
         c.execute("INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b ) VALUES (?,?,?,?,?,?,?)",
         (new_person_data['name'], new_person_data['cohort'], new_person_data['fave_colour']['name'], new_person_data['fave_colour']['hex'], new_person_data['fave_colour']['rgb']['r'], new_person_data['fave_colour']['rgb']['g'], new_person_data['fave_colour']['rgb']['b']))
         c.execute("SELECT * FROM people")
         print(c.fetchall())
         conn.commit()
-        conn.close()
+        new_person = {
+            "id": c.fetchall()[-1][0],
+            "name": new_person_data['name'],
+            "cohort": new_person_data['cohort'],
+            "fave_colour":
+            new_person_data["fave_colour"]
+        }
         people_data.append(new_person)
         return jsonify({'new_person': new_person})
 
