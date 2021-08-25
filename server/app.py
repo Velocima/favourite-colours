@@ -13,7 +13,7 @@ people_data = [
     "cohort": "morris",
     "fave_colour": {
         "name": "mustard",
-        "hex:": "#deb326",
+        "hex": "#deb326",
         "rgb": "222, 179, 38"
     }
   },
@@ -23,7 +23,7 @@ people_data = [
       "cohort": "morris",
       "fave_colour": {
           "name": "grey",
-          "hex:": "#808080",
+          "hex": "#808080",
           "rgb": "128,128,128"
       }
   },
@@ -33,7 +33,7 @@ people_data = [
       "cohort": "morris",
       "fave_colour": {
           "name": "purple",
-          "hex:": "#7F00FF",
+          "hex": "#7F00FF",
           "rgb": "127, 0, 255"
       }
   }
@@ -42,6 +42,10 @@ people_data = [
 @app.route('/')
 def root():
   return render_template('index.html', title="Home", content="bye")
+
+@app.route('/people')
+def show_colours():
+  return render_template('people.html', cohort="morris")
 
 @app.route('/colours')
 def colours(): 
@@ -53,7 +57,7 @@ def colours():
         colour["number_of_favourites"] += 1
   return jsonify({ "colours": colours })
 
-@app.route('/people', methods=["POST", "GET"])
+@app.route('/api/people', methods=["POST", "GET"])
 def people(): 
   if request.method == "GET":
     return jsonify({ "people": people_data })
