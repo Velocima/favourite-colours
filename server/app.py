@@ -7,13 +7,14 @@ app = Flask(__name__)
 CORS(app)
 
 people_data = [
+
     {
         "id": 1,
         "name": "daniel",
         "cohort": "morris",
         "fave_colour": {
             "name": "mustard",
-            "hex:": "#deb326",
+            "hex": "#deb326",
             "rgb": {
                 "r": 222,
                 "g": 179,
@@ -27,7 +28,7 @@ people_data = [
         "cohort": "morris",
         "fave_colour": {
             "name": "grey",
-            "hex:": "#808080",
+            "hex": "#808080",
             "rgb": {
                 "r": 128,
                 "g": 128,
@@ -41,7 +42,7 @@ people_data = [
         "cohort": "morris",
         "fave_colour": {
             "name": "purple",
-            "hex:": "#7F00FF",
+            "hex": "#7F00FF",
             "rgb": {
                 "r": 127,
                 "g": 0,
@@ -55,6 +56,11 @@ people_data = [
 @app.route('/')
 def root():
     return render_template('index.html', title="Home", content="bye")
+
+
+@app.route('/people')
+def show_colours():
+  return render_template('people.html', cohort="morris")
 
 
 @app.route('/api/colours')

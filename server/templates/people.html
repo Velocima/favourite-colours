@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{cohort}'s favorite colours</title>
+  </head>
+  <body>
+    <main id="person-container"></main>
+  </body>
+  <script>
+    const generateCohortBoxes = (data) => {
+      console.log('hi');
+      for (let i = 0; i < data.length; i++) {
+        const newArticle = document.createElement('article');
+        newArticle.style.background = data[i].fave_colour.hex;
+
+        const personName = document.createElement('h2');
+        personName.textContent = data[i].name;
+
+        const colourName = document.createElement('h3');
+        colourName.textContent = data[i].fave_colour.name;
+
+        const cohortName = document.createElement('h3');
+        cohortName.textContent = data[i].cohort;
+
+        newArticle.append(personName);
+        newArticle.append(colourName);
+        newArticle.append(cohortName);
+        document.getElementById('person-container').append(newArticle);
+      }
+    };
+
+    async function getColourData() {
+      const response = await fetch('http://127.0.0.1:5000/api/people');
+      console.log(response);
+      const data = await response.json();
+      console.log(data.people);
+      generateCohortBoxes(data.people);
+    }
+
+    const setContrastText = (colour) => {};
+
+    getColourData();
+  </script>
+</html>
