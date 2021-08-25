@@ -9,7 +9,7 @@ app = Flask(__name__)
 if (os.getenv('FLASK_ENV') == 'development'):
     cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "http://127.0.0.1:5000/"}})
 else:
-    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "'''production url'''"}})
+    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "https://cohort-colours.herokuapp.com/"}})
 
 people_data = [
 
