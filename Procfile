@@ -1,1 +1,1 @@
-web: cd server && pip install && gunicorn app:app
+web: cd server && pip install pipenv && pipenv shell && pipenv install && pipenv run start
