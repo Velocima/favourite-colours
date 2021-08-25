@@ -105,19 +105,20 @@ def colours():
 @app.route('/api/people', methods=["POST", "GET"])
 def people():
     if request.method == "GET":
+        c.execute("SELECT * FROM people")
         data = c.fetchall()
         formatted_data = [
             {
-                "id": person['id'],
-                "name": person['name'],
-                "cohort": person['morris'],
+                "id": person[0],
+                "name": person[1],
+                "cohort": person[2],
                 "fave_colour": {
-                    "name": person['fave_colour_name'],
-                    "hex": person['fave_colour_hex'],
+                    "name": person[3],
+                    "hex": person[4],
                     "rgb": {
-                        "r": person['fave_colour_r'],
-                        "g": person['fave_colour_g'],
-                        "b": person['fave_colour_b']
+                        "r": person[5],
+                        "g": person[6],
+                        "b": person[7]
                     }
                 }
 
