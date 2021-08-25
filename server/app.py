@@ -1,10 +1,15 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from werkzeug.exceptions import NotFound
+import os
 
 
 app = Flask(__name__)
-CORS(app)
+
+if (os.getenv('FLASK_ENV') == 'development'):
+    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "http://127.0.0.1:5000/"}})
+else:
+    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "'''production url'''"}})
 
 people_data = [
 
