@@ -1,0 +1,1 @@
+web: cd server && pip install && gunicorn app:app
