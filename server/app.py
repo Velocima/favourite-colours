@@ -62,6 +62,8 @@ people_data = [
 def root():
     if (os.getenv('FLASK_ENV') == 'development'):
         url = 'http://127.0.0.1:5000/people'
+    else:
+        url = 'https://cohort-colours.herokuapp.com/people'
     return render_template('index.html', title="Home", content="Cohort Colours", url=url)
 
 

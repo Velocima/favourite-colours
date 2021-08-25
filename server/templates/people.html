@@ -1,94 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{cohort}}'s favorite colours</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Besley&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        margin: 0;
-        height: 100vh;
-      }
-      main {
-        height: 100vh;
-      }
-      article {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-family: 'Besley', serif;
-        flex: 1;
-        padding: 10px;
-      }
-      article h3 {
-        margin: 0px;
-      }
-      article h2 {
-        margin: 0px;
-      }
-      .colour-name {
-        font-size: 40px;
-      }
-      .cohort-name {
-        font-size: 15px;
-      }
-      #person-container {
-        display: flex;
-        flex-direction: column;
-      }
-    </style>
-  </head>
-  <body>
-    <main id="person-container"></main>
-  </body>
-  <script>
-    const generateCohortBoxes = (data) => {
-      for (let i = 0; i < data.length; i++) {
-        const textColour = setContrastText(data[i].fave_colour.rgb);
-        const newArticle = document.createElement('article');
-        newArticle.style.background = data[i].fave_colour.hex;
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{{cohort}}'s favorite colours</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Besley&display=swap" rel="stylesheet" />
+		<style>
+			body {
+				margin: 0;
+				height: 100vh;
+			}
+			main {
+				height: 100vh;
+			}
+			article {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				font-family: 'Besley', serif;
+				flex: 1;
+				padding: 10px;
+			}
+			article h3 {
+				margin: 0px;
+			}
+			article h2 {
+				margin: 0px;
+			}
+			.colour-name {
+				font-size: 40px;
+			}
+			.cohort-name {
+				font-size: 15px;
+			}
+			#person-container {
+				display: flex;
+				flex-direction: column;
+			}
+		</style>
+	</head>
+	<body>
+		<main id="person-container"></main>
+	</body>
+	<script>
+		const generateCohortBoxes = (data) => {
+			for (let i = 0; i < data.length; i++) {
+				const textColour = setContrastText(data[i].fave_colour.rgb);
+				const newArticle = document.createElement('article');
+				newArticle.style.background = data[i].fave_colour.hex;
 
-        const personName = document.createElement('h2');
-        personName.textContent = data[i].name.toLowerCase();
-        personName.style.color = textColour;
+				const personName = document.createElement('h2');
+				personName.textContent = data[i].name.toLowerCase();
+				personName.style.color = textColour;
 
-        const colourName = document.createElement('h3');
-        colourName.textContent = data[i].fave_colour.name;
-        colourName.style.color = textColour;
-        colourName.classList.add('colour-name');
+				const colourName = document.createElement('h3');
+				colourName.textContent = data[i].fave_colour.name;
+				colourName.style.color = textColour;
+				colourName.classList.add('colour-name');
 
-        const cohortName = document.createElement('h3');
-        cohortName.textContent = data[i].cohort.toLowerCase();
-        cohortName.style.color = textColour;
-        cohortName.classList.add('cohort-name');
+				const cohortName = document.createElement('h3');
+				cohortName.textContent = data[i].cohort.toLowerCase();
+				cohortName.style.color = textColour;
+				cohortName.classList.add('cohort-name');
 
-        newArticle.append(colourName);
-        newArticle.append(personName);
-        newArticle.append(cohortName);
-        document.getElementById('person-container').append(newArticle);
-      }
-    };
+				newArticle.append(colourName);
+				newArticle.append(personName);
+				newArticle.append(cohortName);
+				document.getElementById('person-container').append(newArticle);
+			}
+		};
 
-    async function getColourData() {
-      const response = await fetch('http://127.0.0.1:5000/api/people');
-      const data = await response.json();
-      generateCohortBoxes(data.people);
-    }
+		async function getColourData() {
+			const response = await fetch(
+				`http${window.location.host === 'cohort-colours.herokuapp' ? 's' : ''}://${
+					window.location.host
+				}/api/people`
+			);
+			const data = await response.json();
+			generateCohortBoxes(data.people);
+		}
 
-    const setContrastText = (colour) => {
-      const average = (colour.r + colour.g + colour.b) / 3;
-      return average > 125 ? 'black' : 'white';
-    };
+		const setContrastText = (colour) => {
+			const average = (colour.r + colour.g + colour.b) / 3;
+			return average > 125 ? 'black' : 'white';
+		};
 
-    getColourData();
-  </script>
+		getColourData();
+	</script>
 </html>
