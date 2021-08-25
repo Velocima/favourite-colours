@@ -7,6 +7,7 @@ name = "pypi"
 flask = "*"
 pytest = "*"
 flask-cors = "*"
+gunicorn = "*"
 
 [dev-packages]
 pytest = "*"
@@ -15,5 +16,6 @@ pytest = "*"
 python_version = "3.9"
 
 [scripts]
+start = "gunicorn app:app"
 test = "pytest ."
 dev = "sh -c \"export FLASK_ENV='development' && flask run\""
