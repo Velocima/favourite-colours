@@ -12,12 +12,14 @@
         padding: 0;
         box-sizing: border-box;
       }
+      body {
+        transition: 1s;
+      }
       h1 {
         text-align: center;
         margin: 20px 0;
       }
       form {
-        border: solid 1px red;
         margin: 20px auto;
         width: 50%;
         display: flex;
@@ -25,6 +27,8 @@
         align-items: center;
         justify-content: center;
         padding: 20px;
+
+        background-color: aliceblue;
       }
       input[type='color'] {
         border: none;
@@ -34,6 +38,10 @@
         width: 100%;
         height: 30px;
         margin: 10px 0px 15px 0px;
+      }
+      a {
+        text-decoration: none;
+        color: black;
       }
     </style>
   </head>
@@ -48,6 +56,7 @@
       <input name="color-name" type="text" id="color-name" required />
       <input name="color" type="color" required />
       <input type="submit" />
+      <a href="{{url}}">View everyone's favorite colours</a>
     </form>
 
     <script>
@@ -86,6 +95,17 @@
         await fetch(`http://${window.location.host}/api/people`, options);
       };
       form.addEventListener('submit', handlesubmit);
+
+      function changeBackgroundColour() {
+        console.log('hey');
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+
+        document.querySelector('body').style.background = `rgb(${r},${g},${b})`;
+      }
+
+      setInterval(changeBackgroundColour, 1000);
     </script>
   </body>
 </html>
