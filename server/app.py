@@ -27,7 +27,6 @@ VALUES (?,?,?,?,?,?,?)''', ("Jawwad", "Morris", "Grey", "#808080", 128, 128, 128
 
 
 c.execute("SELECT * FROM people")
-print(c.fetchall())
 conn.commit()
 
 app = Flask(__name__)
@@ -141,7 +140,6 @@ def people():
         c.execute("INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b ) VALUES (?,?,?,?,?,?,?)",
                   (new_person_data['name'], new_person_data['cohort'], new_person_data['fave_colour']['name'], new_person_data['fave_colour']['hex'], new_person_data['fave_colour']['rgb']['r'], new_person_data['fave_colour']['rgb']['g'], new_person_data['fave_colour']['rgb']['b']))
         c.execute("SELECT * FROM people")
-        print(c.fetchall())
         conn.commit()
         new_person = {
             "id": c.fetchall()[-1][0],
