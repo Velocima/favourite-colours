@@ -18,6 +18,31 @@ c.execute(""" CREATE TABLE people (
     fave_colour_b INTEGER 
 ) """)
 
+# c.execute("""INSERT INTO people
+#     (
+#         name,
+#         cohort,
+#         fave_colour_name,
+#         fave_colour_hex,
+#         fave_colour_r,
+#         fave_colour_g,
+#         fave_colour_b
+#     )
+#     VALUES (
+#         (Dan, Morris, Mustard, #e1ad01, 255, 173, 100),
+#         (Max, Morris, Purple, #8111ee, 129, 17, 238),
+#         (Jawwad, Morris, Grey, #808080, 128, 128, 128)
+#     )
+#     """)
+
+c.execute('''INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b)
+VALUES (?,?,?,?,?,?,?)''', ("Dan", "Morris", "Mustard", "#e1ad01", 255, 173, 100))
+c.execute('''INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b)
+VALUES (?,?,?,?,?,?,?)''', ("Max", "Morris", "Purple", "#8111ee", 129, 17, 238))
+c.execute('''INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b)
+VALUES (?,?,?,?,?,?,?)''', ("Jawwad", "Morris", "Grey", "#808080", 128, 128, 128))
+
+
 c.execute("SELECT * FROM people")
 print(c.fetchall())
 conn.commit()
@@ -25,9 +50,11 @@ conn.commit()
 app = Flask(__name__)
 
 if (os.getenv('FLASK_ENV') == 'development'):
-    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "http://127.0.0.1:5000/"}})
+    cors = CORS(app, resources={r'/*': {"origins": "*"},
+                r"/api/*": {"origins": "http://127.0.0.1:5000/"}})
 else:
-    cors = CORS(app, resources={r'/*': {"origins": "*"}, r"/api/*": {"origins": "https://cohort-colours.herokuapp.com/"}})
+    cors = CORS(app, resources={r'/*': {"origins": "*"},
+                r"/api/*": {"origins": "https://cohort-colours.herokuapp.com/"}})
 
 people_data = [
 
@@ -75,6 +102,7 @@ people_data = [
     }
 ]
 
+
 @app.route('/')
 def root():
     if (os.getenv('FLASK_ENV') == 'development'):
@@ -86,7 +114,7 @@ def root():
 
 @app.route('/people')
 def show_colours():
-  return render_template('people.html', cohort="morris")
+    return render_template('people.html', cohort="morris")
 
 
 @app.route('/api/colours')
@@ -105,19 +133,20 @@ def colours():
 @app.route('/api/people', methods=["POST", "GET"])
 def people():
     if request.method == "GET":
+        c.execute('SELECT * FROM people')
         data = c.fetchall()
         formatted_data = [
             {
-                "id": person['id'],
-                "name": person['name'],
-                "cohort": person['morris'],
+                "id": person[0],
+                "name": person[1],
+                "cohort": person[2],
                 "fave_colour": {
-                    "name": person['fave_colour_name'],
-                    "hex": person['fave_colour_hex'],
+                    "name": person[3],
+                    "hex": person[4],
                     "rgb": {
-                        "r": person['fave_colour_r'],
-                        "g": person['fave_colour_g'],
-                        "b": person['fave_colour_b']
+                        "r": person[5],
+                        "g": person[6],
+                        "b": person[7]
                     }
                 }
 
@@ -127,7 +156,7 @@ def people():
     elif request.method == "POST":
         new_person_data = request.json
         c.execute("INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b ) VALUES (?,?,?,?,?,?,?)",
-        (new_person_data['name'], new_person_data['cohort'], new_person_data['fave_colour']['name'], new_person_data['fave_colour']['hex'], new_person_data['fave_colour']['rgb']['r'], new_person_data['fave_colour']['rgb']['g'], new_person_data['fave_colour']['rgb']['b']))
+                  (new_person_data['name'], new_person_data['cohort'], new_person_data['fave_colour']['name'], new_person_data['fave_colour']['hex'], new_person_data['fave_colour']['rgb']['r'], new_person_data['fave_colour']['rgb']['g'], new_person_data['fave_colour']['rgb']['b']))
         c.execute("SELECT * FROM people")
         print(c.fetchall())
         conn.commit()
@@ -153,7 +182,3 @@ def person(person_id):
 @app.errorhandler(NotFound)
 def handle_not_found(err):
     return jsonify({'error': f'{err}'})
-
-
-
-
