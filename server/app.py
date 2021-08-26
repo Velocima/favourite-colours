@@ -18,23 +18,6 @@ c.execute(""" CREATE TABLE people (
     fave_colour_b INTEGER 
 ) """)
 
-# c.execute("""INSERT INTO people
-#     (
-#         name,
-#         cohort,
-#         fave_colour_name,
-#         fave_colour_hex,
-#         fave_colour_r,
-#         fave_colour_g,
-#         fave_colour_b
-#     )
-#     VALUES (
-#         (Dan, Morris, Mustard, #e1ad01, 255, 173, 100),
-#         (Max, Morris, Purple, #8111ee, 129, 17, 238),
-#         (Jawwad, Morris, Grey, #808080, 128, 128, 128)
-#     )
-#     """)
-
 c.execute('''INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b)
 VALUES (?,?,?,?,?,?,?)''', ("Dan", "Morris", "Mustard", "#e1ad01", 255, 173, 100))
 c.execute('''INSERT INTO people (name, cohort, fave_colour_name, fave_colour_hex, fave_colour_r, fave_colour_g, fave_colour_b)
@@ -133,7 +116,7 @@ def colours():
 @app.route('/api/people', methods=["POST", "GET"])
 def people():
     if request.method == "GET":
-        c.execute('SELECT * FROM people')
+        c.execute("SELECT * FROM people")
         data = c.fetchall()
         formatted_data = [
             {
