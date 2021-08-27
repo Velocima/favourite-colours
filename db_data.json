@@ -1,0 +1,312 @@
+{
+	"people": [
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#e1ad01",
+				"name": "Mustard",
+				"rgb": {
+					"b": 100,
+					"g": 173,
+					"r": 255
+				}
+			},
+			"id": 1,
+			"name": "Dan"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#8111ee",
+				"name": "Purple",
+				"rgb": {
+					"b": 238,
+					"g": 17,
+					"r": 129
+				}
+			},
+			"id": 2,
+			"name": "Max"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#808080",
+				"name": "Grey",
+				"rgb": {
+					"b": 128,
+					"g": 128,
+					"r": 128
+				}
+			},
+			"id": 3,
+			"name": "Jawwad"
+		},
+		{
+			"cohort": "morris",
+			"fave_colour": {
+				"hex": "#c800ff",
+				"name": "PURPLEEE",
+				"rgb": {
+					"b": 255,
+					"g": 0,
+					"r": 200
+				}
+			},
+			"id": 4,
+			"name": "Shav"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#4400ff",
+				"name": "Some kind of blue",
+				"rgb": {
+					"b": 255,
+					"g": 0,
+					"r": 68
+				}
+			},
+			"id": 5,
+			"name": "Zak"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#000000",
+				"name": "Mustard",
+				"rgb": {
+					"b": 0,
+					"g": 0,
+					"r": 0
+				}
+			},
+			"id": 6,
+			"name": "Monica"
+		},
+		{
+			"cohort": "Kare",
+			"fave_colour": {
+				"hex": "#000000",
+				"name": "Red",
+				"rgb": {
+					"b": 0,
+					"g": 0,
+					"r": 0
+				}
+			},
+			"id": 7,
+			"name": "Dimeji Taiwo"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#ffffff",
+				"name": "Pure White",
+				"rgb": {
+					"b": 255,
+					"g": 255,
+					"r": 255
+				}
+			},
+			"id": 8,
+			"name": "Akash \"Angel\" \"Shav\" Khambay"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#13cee7",
+				"name": "Turquoise",
+				"rgb": {
+					"b": 231,
+					"g": 206,
+					"r": 19
+				}
+			},
+			"id": 9,
+			"name": "Tom"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#6deedf",
+				"name": "Turqoise",
+				"rgb": {
+					"b": 223,
+					"g": 238,
+					"r": 109
+				}
+			},
+			"id": 10,
+			"name": "Rafika"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#18f2d8",
+				"name": "Turquoise",
+				"rgb": {
+					"b": 216,
+					"g": 242,
+					"r": 24
+				}
+			},
+			"id": 11,
+			"name": "Scott"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#f5d714",
+				"name": "Mustard",
+				"rgb": {
+					"b": 20,
+					"g": 215,
+					"r": 245
+				}
+			},
+			"id": 12,
+			"name": "Monica"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#39a3b1",
+				"name": "Teal",
+				"rgb": {
+					"b": 177,
+					"g": 163,
+					"r": 57
+				}
+			},
+			"id": 13,
+			"name": "Polina"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#5f9ea0",
+				"name": "Cadet Blue",
+				"rgb": {
+					"b": 160,
+					"g": 158,
+					"r": 95
+				}
+			},
+			"id": 14,
+			"name": "Romeo"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#c364dd",
+				"name": "Purple",
+				"rgb": {
+					"b": 221,
+					"g": 100,
+					"r": 195
+				}
+			},
+			"id": 15,
+			"name": "Samekah"
+		},
+		{
+			"cohort": "Morris",
+			"fave_colour": {
+				"hex": "#d23232",
+				"name": "Dark Red",
+				"rgb": {
+					"b": 50,
+					"g": 50,
+					"r": 210
+				}
+			},
+			"id": 16,
+			"name": "Humza"
+		},
+		{
+			"cohort": "Kurita",
+			"fave_colour": {
+				"hex": "#8a9a5b",
+				"name": "Moss Green",
+				"rgb": {
+					"b": 91,
+					"g": 154,
+					"r": 138
+				}
+			},
+			"id": 17,
+			"name": "Harris Mawardi"
+		},
+		{
+			"cohort": "kurita",
+			"fave_colour": {
+				"hex": "#000000",
+				"name": "blue",
+				"rgb": {
+					"b": 0,
+					"g": 0,
+					"r": 0
+				}
+			},
+			"id": 18,
+			"name": "abi"
+		},
+		{
+			"cohort": "Kurita",
+			"fave_colour": {
+				"hex": "#000000",
+				"name": "Pink",
+				"rgb": {
+					"b": 0,
+					"g": 0,
+					"r": 0
+				}
+			},
+			"id": 19,
+			"name": "Jasmin"
+		},
+		{
+			"cohort": "Kurita",
+			"fave_colour": {
+				"hex": "#d07c7c",
+				"name": "actually pink",
+				"rgb": {
+					"b": 124,
+					"g": 124,
+					"r": 208
+				}
+			},
+			"id": 20,
+			"name": "Jasmin"
+		},
+		{
+			"cohort": "Trainers",
+			"fave_colour": {
+				"hex": "#cd841d",
+				"name": "orange",
+				"rgb": {
+					"b": 29,
+					"g": 132,
+					"r": 205
+				}
+			},
+			"id": 21,
+			"name": "Beth"
+		},
+		{
+			"cohort": "trainers",
+			"fave_colour": {
+				"hex": "#f4bdee",
+				"name": "pink",
+				"rgb": {
+					"b": 238,
+					"g": 189,
+					"r": 244
+				}
+			},
+			"id": 22,
+			"name": "Sophie"
+		}
+	]
+}
